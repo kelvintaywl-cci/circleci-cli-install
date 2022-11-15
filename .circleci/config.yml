@@ -1,0 +1,44 @@
+version: 2.1
+
+executors:
+  mac:
+    macos:
+      xcode: 13.4.1
+    resource_class: medium
+  linux-arm64:
+    machine:
+      image: ubuntu-2004:current
+    resource_class: arm.medium
+  linux-amd64:
+    machine:
+      image: ubuntu-2004:current
+    resource_class: medium
+
+commands:
+  diagnose:
+    steps:
+      - run: uname
+      - run: uname -m
+
+jobs:
+  install:
+    parameters:
+      exec:
+        type: executor
+    executor: << parameters.exec >>
+    steps:
+      - diagnose
+      - checkout
+
+workflows:
+  main:
+    jobs:
+      - install:
+          matrix:
+            parameters:
+              exec:
+                - mac
+                - linux-arm64
+                - linux-amd64
+
+# VS Code Extension Version: 1.0.2
