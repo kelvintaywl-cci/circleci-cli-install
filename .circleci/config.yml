@@ -19,6 +19,14 @@ commands:
     steps:
       - run: uname
       - run: uname -m
+  install-cli:
+    steps:
+      - checkout
+      - run: |
+          sudo bash install.sh
+      - run: |
+          command -v circleci
+          circleci version
 
 jobs:
   install:
@@ -28,7 +36,7 @@ jobs:
     executor: << parameters.exec >>
     steps:
       - diagnose
-      - checkout
+      - install-cli
 
 workflows:
   main:
