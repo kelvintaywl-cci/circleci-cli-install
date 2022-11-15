@@ -28,6 +28,8 @@ commands:
           command -v circleci
           circleci version
 
+          circleci config validate .circleci/config.yml
+
 jobs:
   install:
     parameters:
